@@ -98,19 +98,44 @@ function add() {
     render();
 }
 
+function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return m + ". " + day + ".";
+}
+
 function render() {
     const list = document.getElementById("list");
     list.innerHTML = "";
 
-    const today = new Date();
+    const now = new Date();
+    now.setHours(0,0,0,0);
+
+    if (events.length === 0) {
+        list.innerHTML = "일정 없음";
+        return;
+    }
 
     events.forEach(e => {
         const target = new Date(e.date);
-        const diff = Math.ceil((target - today) / (1000 * 60 * 60 * 24));
+        target.setHours(0,0,0,0);
+
+        const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
+
+        let ddayText = "";
+
+        if (diff > 0) {
+            ddayText = "D-" + diff;
+        } else if (diff < 0) {
+            ddayText = "D+" + Math.abs(diff);
+        } else {
+            ddayText = "D-Day";
+        }
 
         list.innerHTML += `
             <div class="item">
-                ${e.title} → D-${diff} (${e.date})
+                ${e.title} ${ddayText} (${formatDate(e.date)})
             </div>
         `;
     });
@@ -119,4 +144,4 @@ function render() {
 </script>
 
 </body>
-</html> 
+</html>
