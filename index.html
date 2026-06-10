@@ -36,9 +36,10 @@
 
 .todo-item input[type="text"] {
     flex: 1;
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #ccc;
+}
+
+button {
+    margin: 10px;
 }
 </style>
 
@@ -60,14 +61,28 @@
             <h2>To-do list</h2>
         </div>
 
-        <div class="todo-item">
-            <input type="checkbox">
-            <input type="text" placeholder="할 일 입력">
-        </div>
+        <input id="todoInput" type="text" placeholder="할 일 입력">
+        <button onclick="addTodo()">추가</button>
 
-        <div class="todo-item">
-            <input type="checkbox">
-            <input type="text" placeholder="할 일 입력">
-        </div>
+        <div id="todoList"></div>
 
-        <div
+    </div>
+
+</div>
+
+<script>
+function addTodo() {
+    const text = document.getElementById("todoInput").value;
+    if (text === "") return;
+
+    const div = document.createElement("div");
+    div.className = "todo-item";
+
+    div.innerHTML = `
+        <input type="checkbox" onchange="checkItem(this)">
+        <input type="text" value="${text}">
+        <button onclick="removeItem(this)">삭제</button>
+    `;
+
+    document.getElementById("todoList").appendChild(div);
+    document.getElementBy
