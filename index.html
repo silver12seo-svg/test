@@ -30,6 +30,20 @@
     margin-bottom: 20px;
 }
 
+/* 캘린더 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 5px;
+}
+
+/* 입력 */
 .input-box {
     margin-bottom: 20px;
 }
@@ -39,6 +53,7 @@
     margin: 5px;
 }
 
+/* 리스트 */
 .list {
     border: 1px solid #ccc;
     padding: 10px;
@@ -48,6 +63,20 @@
     padding: 5px;
     border-bottom: 1px solid #eee;
 }
+
+/* 투두 */
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px;
+}
+
+.todo-item input[type="text"] {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
 </style>
 
 </head>
@@ -56,34 +85,95 @@
 
 <div class="container">
 
+    <!-- LEFT -->
     <div class="left">
 
         <div class="header">
             <h2>나의 일정</h2>
         </div>
 
+        <!-- 캘린더 -->
+        <h3 id="monthTitle"></h3>
+        <table id="calendar"></table>
+
+        <!-- D-day -->
         <div class="input-box">
             <input type="text" id="title" placeholder="일정 이름">
             <input type="date" id="date">
             <button onclick="add()">추가</button>
         </div>
 
-        <div class="list" id="list">
-            일정 없음
-        </div>
+        <div class="list" id="list">일정 없음</div>
 
     </div>
 
+    <!-- RIGHT -->
     <div class="right">
+
         <div class="header">
             <h2>To-do list</h2>
         </div>
-        <p>여기는 나중에 추가</p>
+
+        <div class="todo-item">
+            <input type="checkbox">
+            <input type="text" placeholder="할 일 입력">
+        </div>
+
+        <div class="todo-item">
+            <input type="checkbox">
+            <input type="text" placeholder="할 일 입력">
+        </div>
+
+        <div class="todo-item">
+            <input type="checkbox">
+            <input type="text" placeholder="할 일 입력">
+        </div>
+
     </div>
 
 </div>
 
 <script>
+
+/* =======================
+   캘린더 생성
+======================= */
+
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth();
+
+document.getElementById("monthTitle").innerText =
+year + "년 " + (month + 1) + "월";
+
+const firstDay = new Date(year, month, 1).getDay();
+const lastDate = new Date(year, month + 1, 0).getDate();
+
+let html = "<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr><tr>";
+
+let count = 0;
+
+for (let i = 0; i < firstDay; i++) {
+    html += "<td></td>";
+    count++;
+}
+
+for (let d = 1; d <= lastDate; d++) {
+    html += "<td>" + d + "</td>";
+    count++;
+
+    if (count % 7 === 0) {
+        html += "</tr><tr>";
+    }
+}
+
+html += "</tr>";
+
+document.getElementById("calendar").innerHTML = html;
+
+/* =======================
+   D-day 기능
+======================= */
 
 let events = [];
 
@@ -98,7 +188,6 @@ function add() {
     render();
 }
 
-// 날짜 포맷 (06. 01.)
 function formatDate(dateStr) {
     const d = new Date(dateStr);
     const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -115,7 +204,6 @@ function render() {
         return;
     }
 
-    // 오늘 기준 00:00 고정
     const now = new Date();
     now.setHours(0,0,0,0);
 
@@ -123,7 +211,6 @@ function render() {
         const target = new Date(e.date);
         target.setHours(0,0,0,0);
 
-        // 🔥 핵심 안정 계산
         const diff = Math.round((target - now) / (1000 * 60 * 60 * 24));
 
         let ddayText = "";
