@@ -27,11 +27,18 @@
     margin: 10px;
 }
 
-.box {
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+}
+
+.todo-item input[type="text"] {
+    flex: 1;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ccc;
 }
 </style>
 
@@ -42,19 +49,21 @@
 <div class="container">
 
     <div class="left-section">
-
         <div class="header">
             <h2>나의 일정</h2>
         </div>
 
-        <div class="box" style="height:200px;">
-            캘린더 영역
+        <div style="margin:10px;">
+            <div style="border:1px solid #ddd; height:200px; padding:10px;">
+                캘린더 영역
+            </div>
         </div>
 
-        <div class="box">
-            D-day 영역
+        <div style="margin:10px;">
+            <div style="border:1px solid #ddd; padding:10px;">
+                D-day 영역
+            </div>
         </div>
-
     </div>
 
     <div class="right-section">
