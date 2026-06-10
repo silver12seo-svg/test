@@ -5,6 +5,10 @@
 <title>일정 관리</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     height: 100vh;
@@ -39,24 +43,24 @@
     border: 1px solid #ccc;
 }
 
-/* 캘린더 */
+/* 캘린더 확실히 보이게 */
 table {
-    width: 90%;
+    width: 95%;
     margin: 10px;
     border-collapse: collapse;
 }
 
-td, th {
-    border: 1px solid #ccc;
+th, td {
+    border: 2px solid #000;
     text-align: center;
-    padding: 5px;
+    padding: 8px;
 }
 
 /* D-day */
 .dday {
     margin: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 2px solid #000;
 }
 </style>
 
@@ -72,10 +76,15 @@ td, th {
             <h2>나의 일정</h2>
         </div>
 
-        <!-- 캘린더 -->
         <table>
             <tr>
-                <th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+                <th>일</th>
+                <th>월</th>
+                <th>화</th>
+                <th>수</th>
+                <th>목</th>
+                <th>금</th>
+                <th>토</th>
             </tr>
             <tr>
                 <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
@@ -85,7 +94,6 @@ td, th {
             </tr>
         </table>
 
-        <!-- D-day -->
         <div class="dday">
             ⏰ D-day : 시험일까지 13일 남음
         </div>
