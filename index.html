@@ -3,6 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>일정 관리</title>
+
+    <style>
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .left-section {
+            flex: 1;
+            border-right: 2px solid #ccc;
+        }
+
+        .right-section {
+            flex: 1;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -15,7 +32,6 @@
         </div>
 
         <div class="calendar"></div>
-
         <div class="d-day-list"></div>
     </div>
 
@@ -28,11 +44,9 @@
         <div class="progress-area"></div>
 
         <div class="todo-list">
-
             <div class="todo-item"></div>
             <div class="todo-item"></div>
             <div class="todo-item"></div>
-
         </div>
 
         <div class="theme-area"></div>
