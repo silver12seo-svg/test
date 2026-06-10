@@ -5,6 +5,10 @@
 <title>일정 관리</title>
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 .container {
     display: flex;
     height: 100vh;
@@ -37,23 +41,34 @@
 .todo-item input[type="text"] {
     flex: 1;
     border: 1px solid #ccc;
+    padding: 5px;
 }
 
+/* 캘린더 */
 table {
-    width: 100%;
+    width: 95%;
     border-collapse: collapse;
+    margin: 10px;
 }
 
 th, td {
     border: 1px solid #ccc;
     text-align: center;
-    padding: 5px;
+    padding: 6px;
 }
 
+/* D-day */
 .dday {
     margin: 10px;
     padding: 10px;
     border: 1px solid #000;
+}
+
+button {
+    margin-top: 5px;
+    padding: 5px;
+    border: 1px solid #000;
+    background: #eee;
 }
 </style>
 
@@ -63,6 +78,7 @@ th, td {
 
 <div class="container">
 
+    <!-- LEFT -->
     <div class="left-section">
 
         <div class="header">
@@ -75,9 +91,9 @@ th, td {
             <table id="calendar"></table>
         </div>
 
-        <!-- D-day 입력 -->
+        <!-- D-day -->
         <div class="dday">
-            <p>시험일 선택:</p>
+            <p>시험일 선택</p>
             <input type="date" id="examDate">
             <button onclick="calcDDay()">계산</button>
             <p id="ddayResult">D-day : -</p>
@@ -85,6 +101,7 @@ th, td {
 
     </div>
 
+    <!-- RIGHT -->
     <div class="right-section">
 
         <div class="header">
@@ -111,7 +128,9 @@ th, td {
 </div>
 
 <script>
+// =====================
 // 캘린더
+// =====================
 const today = new Date();
 const year = today.getFullYear();
 const month = today.getMonth();
@@ -145,7 +164,9 @@ html += "</tr>";
 document.getElementById("calendar").innerHTML = html;
 
 
-// D-day 계산 함수
+// =====================
+// D-day 계산
+// =====================
 function calcDDay() {
     const input = document.getElementById("examDate").value;
 
