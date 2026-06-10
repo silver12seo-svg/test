@@ -49,6 +49,12 @@ th, td {
     text-align: center;
     padding: 5px;
 }
+
+.dday {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #000;
+}
 </style>
 
 </head>
@@ -63,14 +69,18 @@ th, td {
             <h2>나의 일정</h2>
         </div>
 
-        <!-- 캘린더 들어갈 자리 -->
+        <!-- 캘린더 -->
         <div style="margin:10px; border:1px solid #ddd; padding:10px;">
             <h3 id="monthTitle"></h3>
             <table id="calendar"></table>
         </div>
 
-        <div style="margin:10px; border:1px solid #ddd; padding:10px;">
-            D-day 영역
+        <!-- D-day 입력 -->
+        <div class="dday">
+            <p>시험일 선택:</p>
+            <input type="date" id="examDate">
+            <button onclick="calcDDay()">계산</button>
+            <p id="ddayResult">D-day : -</p>
         </div>
 
     </div>
@@ -101,6 +111,7 @@ th, td {
 </div>
 
 <script>
+// 캘린더
 const today = new Date();
 const year = today.getFullYear();
 const month = today.getMonth();
@@ -132,6 +143,26 @@ for (let d = 1; d <= lastDate; d++) {
 html += "</tr>";
 
 document.getElementById("calendar").innerHTML = html;
+
+
+// D-day 계산 함수
+function calcDDay() {
+    const input = document.getElementById("examDate").value;
+
+    if (!input) {
+        document.getElementById("ddayResult").innerText = "날짜를 선택하세요";
+        return;
+    }
+
+    const today = new Date();
+    const target = new Date(input);
+
+    const diff = target - today;
+    const dday = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+    document.getElementById("ddayResult").innerText =
+        "D-day : " + dday + "일 남음";
+}
 </script>
 
 </body>
