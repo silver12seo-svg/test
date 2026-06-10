@@ -5,10 +5,6 @@
 <title>일정 관리</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
 .container {
     display: flex;
     height: 100vh;
@@ -43,24 +39,25 @@
     border: 1px solid #ccc;
 }
 
-/* 캘린더 확실히 보이게 */
+.calendar {
+    margin: 10px;
+}
+
 table {
     width: 95%;
-    margin: 10px;
     border-collapse: collapse;
 }
 
 th, td {
-    border: 2px solid #000;
+    border: 1px solid #ccc;
     text-align: center;
-    padding: 8px;
+    padding: 5px;
 }
 
-/* D-day */
 .dday {
     margin: 10px;
     padding: 10px;
-    border: 2px solid #000;
+    border: 1px solid #000;
 }
 </style>
 
@@ -76,26 +73,13 @@ th, td {
             <h2>나의 일정</h2>
         </div>
 
-        <table>
-            <tr>
-                <th>일</th>
-                <th>월</th>
-                <th>화</th>
-                <th>수</th>
-                <th>목</th>
-                <th>금</th>
-                <th>토</th>
-            </tr>
-            <tr>
-                <td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td>
-            </tr>
-            <tr>
-                <td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td>
-            </tr>
-        </table>
+        <div class="calendar">
+            <h3 id="monthTitle"></h3>
+            <table id="calendarTable"></table>
+        </div>
 
-        <div class="dday">
-            ⏰ D-day : 시험일까지 13일 남음
+        <div class="dday" id="ddayBox">
+            D-day 계산 중...
         </div>
 
     </div>
@@ -124,6 +108,57 @@ th, td {
     </div>
 
 </div>
+
+<script>
+// =====================
+// 캘린더 생성
+// =====================
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth();
+
+document.getElementById("monthTitle").innerText =
+    year + "년 " + (month + 1) + "월";
+
+const firstDay = new Date(year, month, 1).getDay();
+const lastDate = new Date(year, month + 1, 0).getDate();
+
+let table = "<tr>
+<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+</tr><tr>";
+
+let day = 0;
+
+for (let i = 0; i < firstDay; i++) {
+    table += "<td></td>";
+    day++;
+}
+
+for (let d = 1; d <= lastDate; d++) {
+    table += "<td>" + d + "</td>";
+    day++;
+
+    if (day % 7 === 0) {
+        table += "</tr><tr>";
+    }
+}
+
+table += "</tr>";
+
+document.getElementById("calendarTable").innerHTML = table;
+
+
+// =====================
+// D-day 계산
+// =====================
+const targetDate = new Date(2026, 5, 30); // (월은 0부터 시작 → 5 = 6월)
+
+const diff = targetDate - today;
+const dday = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+document.getElementById("ddayBox").innerText =
+    "⏰ D-day : 시험일까지 " + dday + "일 남음";
+</script>
 
 </body>
 </html>
