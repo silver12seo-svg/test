@@ -57,18 +57,17 @@ th, td {
     padding: 6px;
 }
 
-/* D-day */
-.dday {
+/* 입력 영역 */
+.input-area {
     margin: 10px;
     padding: 10px;
     border: 1px solid #000;
 }
 
-button {
-    margin-top: 5px;
-    padding: 5px;
+.dday-list {
+    margin: 10px;
+    padding: 10px;
     border: 1px solid #000;
-    background: #eee;
 }
 </style>
 
@@ -91,12 +90,16 @@ button {
             <table id="calendar"></table>
         </div>
 
-        <!-- D-day -->
-        <div class="dday">
-            <p>시험일 선택</p>
-            <input type="date" id="examDate">
-            <button onclick="calcDDay()">계산</button>
-            <p id="ddayResult">D-day : -</p>
+        <!-- 일정 입력 -->
+        <div class="input-area">
+            <input type="text" id="eventName" placeholder="일정 이름">
+            <input type="date" id="eventDate">
+            <button onclick="addEvent()">추가</button>
+        </div>
+
+        <!-- D-day 출력 -->
+        <div class="dday-list" id="eventList">
+            일정 없음
         </div>
 
     </div>
@@ -165,24 +168,40 @@ document.getElementById("calendar").innerHTML = html;
 
 
 // =====================
-// D-day 계산
+// 일정 추가 + D-day
 // =====================
-function calcDDay() {
-    const input = document.getElementById("examDate").value;
+let events = [];
 
-    if (!input) {
-        document.getElementById("ddayResult").innerText = "날짜를 선택하세요";
+function addEvent() {
+    const name = document.getElementById("eventName").value;
+    const date = document.getElementById("eventDate").value;
+
+    if (!name || !date) return;
+
+    events.push({ name, date });
+
+    renderEvents();
+}
+
+function renderEvents() {
+    const list = document.getElementById("eventList");
+
+    if (events.length === 0) {
+        list.innerHTML = "일정 없음";
         return;
     }
 
+    list.innerHTML = "";
+
     const today = new Date();
-    const target = new Date(input);
 
-    const diff = target - today;
-    const dday = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    events.forEach(e => {
+        const target = new Date(e.date);
+        const diff = Math.ceil((target - today) / (1000 * 60 * 60 * 24));
 
-    document.getElementById("ddayResult").innerText =
-        "D-day : " + dday + "일 남음";
+        list.innerHTML +=
+            e.name + " : D-" + diff + " (" + e.date + ")<br>";
+    });
 }
 </script>
 
