@@ -1,118 +1,5 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<title>일정 관리</title>
-
-<style>
-.container {
-    display: flex;
-    height: 100vh;
-}
-
-.left-section {
-    flex: 1;
-    border-right: 2px solid #ccc;
-}
-
-.right-section {
-    flex: 1;
-}
-
-.header {
-    border: 2px solid #333;
-    border-radius: 20px;
-    padding: 10px;
-    text-align: center;
-    margin: 10px;
-}
-
-.todo-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 10px;
-}
-
-.todo-item input[type="text"] {
-    flex: 1;
-    border: 1px solid #ccc;
-}
-
-.calendar {
-    margin: 10px;
-}
-
-table {
-    width: 95%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    text-align: center;
-    padding: 5px;
-}
-
-.dday {
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #000;
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-    <div class="left-section">
-
-        <div class="header">
-            <h2>나의 일정</h2>
-        </div>
-
-        <div class="calendar">
-            <h3 id="monthTitle"></h3>
-            <table id="calendarTable"></table>
-        </div>
-
-        <div class="dday" id="ddayBox">
-            D-day 계산 중...
-        </div>
-
-    </div>
-
-    <div class="right-section">
-
-        <div class="header">
-            <h2>To-do list</h2>
-        </div>
-
-        <div class="todo-item">
-            <input type="checkbox">
-            <input type="text" placeholder="할 일 입력">
-        </div>
-
-        <div class="todo-item">
-            <input type="checkbox">
-            <input type="text" placeholder="할 일 입력">
-        </div>
-
-        <div class="todo-item">
-            <input type="checkbox">
-            <input type="text" placeholder="할 일 입력">
-        </div>
-
-    </div>
-
-</div>
-
 <script>
-// =====================
-// 캘린더 생성
-// =====================
+// 캘린더
 const today = new Date();
 const year = today.getFullYear();
 const month = today.getMonth();
@@ -123,9 +10,7 @@ document.getElementById("monthTitle").innerText =
 const firstDay = new Date(year, month, 1).getDay();
 const lastDate = new Date(year, month + 1, 0).getDate();
 
-let table = "<tr>
-<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-</tr><tr>";
+let table = "<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr><tr>";
 
 let day = 0;
 
@@ -148,17 +33,11 @@ table += "</tr>";
 document.getElementById("calendarTable").innerHTML = table;
 
 
-// =====================
-// D-day 계산
-// =====================
-const targetDate = new Date(2026, 5, 30); // (월은 0부터 시작 → 5 = 6월)
-
+// D-day
+const targetDate = new Date(2026, 5, 30);
 const diff = targetDate - today;
 const dday = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
 document.getElementById("ddayBox").innerText =
     "⏰ D-day : 시험일까지 " + dday + "일 남음";
 </script>
-
-</body>
-</html>
