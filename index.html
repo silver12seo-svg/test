@@ -30,6 +30,18 @@
     margin-bottom: 20px;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 5px;
+}
+
 .input-box {
     margin-bottom: 20px;
 }
@@ -69,12 +81,14 @@
 
 <div class="container">
 
-    <!-- LEFT -->
     <div class="left">
 
         <div class="header">
             <h2>나의 일정</h2>
         </div>
+
+        <h3 id="monthTitle"></h3>
+        <table id="calendar"></table>
 
         <div class="input-box">
             <input type="text" id="title" placeholder="일정 이름">
@@ -86,7 +100,6 @@
 
     </div>
 
-    <!-- RIGHT -->
     <div class="right">
 
         <div class="header">
@@ -114,8 +127,15 @@
 
 <script>
 
-// 🔥 저장된 데이터 불러오기
+/* ======================
+   localStorage 초기화
+====================== */
+
 let events = JSON.parse(localStorage.getItem("events")) || [];
+
+/* ======================
+   일정 추가
+====================== */
 
 function add() {
     const title = document.getElementById("title").value;
@@ -125,19 +145,25 @@ function add() {
 
     events.push({ title, date });
 
-    // 🔥 저장
     localStorage.setItem("events", JSON.stringify(events));
 
     render();
 }
 
-// 날짜 포맷 (06. 01.)
+/* ======================
+   날짜 포맷
+====================== */
+
 function formatDate(dateStr) {
     const d = new Date(dateStr);
     const m = String(d.getMonth() + 1).padStart(2, '0');
     const day = String(d.getDate()).padStart(2, '0');
     return m + ". " + day + ".";
 }
+
+/* ======================
+   D-day 출력
+====================== */
 
 function render() {
     const list = document.getElementById("list");
@@ -175,7 +201,46 @@ function render() {
     });
 }
 
-// 최초 실행
+/* ======================
+   캘린더
+====================== */
+
+const today = new Date();
+const year = today.getFullYear();
+const month = today.getMonth();
+
+document.getElementById("monthTitle").innerText =
+year + "년 " + (month + 1) + "월";
+
+const firstDay = new Date(year, month, 1).getDay();
+const lastDate = new Date(year, month + 1, 0).getDate();
+
+let html = "<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr><tr>";
+
+let count = 0;
+
+for (let i = 0; i < firstDay; i++) {
+    html += "<td></td>";
+    count++;
+}
+
+for (let d = 1; d <= lastDate; d++) {
+    html += "<td>" + d + "</td>";
+    count++;
+
+    if (count % 7 === 0) {
+        html += "</tr><tr>";
+    }
+}
+
+html += "</tr>";
+
+document.getElementById("calendar").innerHTML = html;
+
+/* ======================
+   최초 실행
+====================== */
+
 render();
 
 </script>
