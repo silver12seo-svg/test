@@ -69,6 +69,7 @@
 
 <div class="container">
 
+    <!-- LEFT -->
     <div class="left">
 
         <div class="header">
@@ -85,6 +86,7 @@
 
     </div>
 
+    <!-- RIGHT -->
     <div class="right">
 
         <div class="header">
@@ -112,6 +114,7 @@
 
 <script>
 
+// 🔥 저장된 데이터 불러오기
 let events = JSON.parse(localStorage.getItem("events")) || [];
 
 function add() {
@@ -122,11 +125,13 @@ function add() {
 
     events.push({ title, date });
 
+    // 🔥 저장
     localStorage.setItem("events", JSON.stringify(events));
 
     render();
 }
 
+// 날짜 포맷 (06. 01.)
 function formatDate(dateStr) {
     const d = new Date(dateStr);
     const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -170,6 +175,7 @@ function render() {
     });
 }
 
+// 최초 실행
 render();
 
 </script>
