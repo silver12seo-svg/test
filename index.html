@@ -110,20 +110,21 @@ function render() {
     const list = document.getElementById("list");
     list.innerHTML = "";
 
-    const now = new Date();
-    now.setHours(0,0,0,0);
-
     if (events.length === 0) {
         list.innerHTML = "일정 없음";
         return;
     }
 
+    // 오늘 기준 00:00 고정
+    const now = new Date();
+    now.setHours(0,0,0,0);
+
     events.forEach(e => {
         const target = new Date(e.date);
         target.setHours(0,0,0,0);
 
-        // 🔥 핵심: 정상 방향 계산 (미래 + / 과거 -)
-        const diff = Math.floor((target - now) / (1000 * 60 * 60 * 24));
+        // 🔥 핵심 안정 계산
+        const diff = Math.round((target - now) / (1000 * 60 * 60 * 24));
 
         let ddayText = "";
 
