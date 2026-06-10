@@ -13,36 +13,42 @@
 .left-section {
     flex: 1;
     border-right: 2px solid #ccc;
-    padding: 20px;
 }
 
 .right-section {
     flex: 1;
-    padding: 20px;
 }
 
-.header-box {
+.header {
     border: 2px solid #333;
     border-radius: 20px;
     padding: 10px;
     text-align: center;
-    margin-bottom: 15px;
+    margin: 10px;
 }
 
-.todo-box {
+.todo-list {
     border: 1px solid #ccc;
-    padding: 15px;
     border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
 }
 
 .todo-item {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 5px 0;
+    padding: 5px;
 }
 
-input[type="text"] {
-    flex: 1;
+.calendar,
+.d-day-list,
+.progress-area,
+.theme-area {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
 }
 </style>
 
@@ -54,42 +60,32 @@ input[type="text"] {
 
     <div class="left-section">
 
-        <div class="header-box">
-            나의 일정
+        <div class="header">
+            <h2>나의 일정</h2>
         </div>
 
-        <div style="border:1px solid #ddd; height:200px; margin-bottom:20px;"></div>
-
-        <div style="border:1px solid #ddd; padding:10px;">
-            D-day 목록
-        </div>
+        <div class="calendar"></div>
+        <div class="d-day-list"></div>
 
     </div>
 
     <div class="right-section">
 
-        <div class="header-box">
-            To-do list
+        <div class="header">
+            <h2>To-do list</h2>
         </div>
 
-        <div class="todo-box">
+        <div class="progress-area"></div>
 
-            <div class="todo-item">
-                <input type="checkbox">
-                <input type="text" placeholder="할 일 입력">
-            </div>
+        <div class="todo-list">
 
-            <div class="todo-item">
-                <input type="checkbox">
-                <input type="text" placeholder="할 일 입력">
-            </div>
-
-            <div class="todo-item">
-                <input type="checkbox">
-                <input type="text" placeholder="할 일 입력">
-            </div>
+            <div class="todo-item"></div>
+            <div class="todo-item"></div>
+            <div class="todo-item"></div>
 
         </div>
+
+        <div class="theme-area"></div>
 
     </div>
 
