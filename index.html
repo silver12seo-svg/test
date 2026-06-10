@@ -30,20 +30,6 @@
     margin-bottom: 20px;
 }
 
-/* 캘린더 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-th, td {
-    border: 1px solid #ccc;
-    text-align: center;
-    padding: 5px;
-}
-
-/* 입력 */
 .input-box {
     margin-bottom: 20px;
 }
@@ -53,7 +39,6 @@ th, td {
     margin: 5px;
 }
 
-/* 리스트 */
 .list {
     border: 1px solid #ccc;
     padding: 10px;
@@ -64,7 +49,6 @@ th, td {
     border-bottom: 1px solid #eee;
 }
 
-/* 투두 */
 .todo-item {
     display: flex;
     align-items: center;
@@ -85,29 +69,22 @@ th, td {
 
 <div class="container">
 
-    <!-- LEFT -->
     <div class="left">
 
         <div class="header">
             <h2>나의 일정</h2>
         </div>
 
-        <!-- 캘린더 -->
-        <h3 id="monthTitle"></h3>
-        <table id="calendar"></table>
-
-        <!-- D-day -->
         <div class="input-box">
             <input type="text" id="title" placeholder="일정 이름">
             <input type="date" id="date">
             <button onclick="add()">추가</button>
         </div>
 
-        <div class="list" id="list">일정 없음</div>
+        <div class="list" id="list"></div>
 
     </div>
 
-    <!-- RIGHT -->
     <div class="right">
 
         <div class="header">
@@ -135,47 +112,7 @@ th, td {
 
 <script>
 
-/* =======================
-   캘린더 생성
-======================= */
-
-const today = new Date();
-const year = today.getFullYear();
-const month = today.getMonth();
-
-document.getElementById("monthTitle").innerText =
-year + "년 " + (month + 1) + "월";
-
-const firstDay = new Date(year, month, 1).getDay();
-const lastDate = new Date(year, month + 1, 0).getDate();
-
-let html = "<tr><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr><tr>";
-
-let count = 0;
-
-for (let i = 0; i < firstDay; i++) {
-    html += "<td></td>";
-    count++;
-}
-
-for (let d = 1; d <= lastDate; d++) {
-    html += "<td>" + d + "</td>";
-    count++;
-
-    if (count % 7 === 0) {
-        html += "</tr><tr>";
-    }
-}
-
-html += "</tr>";
-
-document.getElementById("calendar").innerHTML = html;
-
-/* =======================
-   D-day 기능
-======================= */
-
-let events = [];
+let events = JSON.parse(localStorage.getItem("events")) || [];
 
 function add() {
     const title = document.getElementById("title").value;
@@ -184,6 +121,8 @@ function add() {
     if (!title || !date) return;
 
     events.push({ title, date });
+
+    localStorage.setItem("events", JSON.stringify(events));
 
     render();
 }
@@ -230,6 +169,8 @@ function render() {
         `;
     });
 }
+
+render();
 
 </script>
 
